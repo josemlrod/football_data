@@ -68,3 +68,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+___ 
+
+# Football Numbers
+
+## Summary
+
+Football Numbers is the solution for when you want to find out how your favorite football player has been doing, statistically. It'll show you the player's stats for the current/previous seasons.
