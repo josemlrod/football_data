@@ -76,3 +76,5 @@ ___
 ## Summary
 
 Football Numbers is the solution for when you want to find out how your favorite football player has been doing, statistically. It'll show you the player's stats for the current/previous seasons.
+
+Powered by [Football API](https://www.api-football.com/documentation-v3). Test endpoints [here](https://rapidapi.com/api-sports/api/api-football/).

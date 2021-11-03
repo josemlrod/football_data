@@ -1,0 +1,1 @@
+export const getTeamId = (team) => team.team.id;
