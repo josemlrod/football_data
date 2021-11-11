@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native-web';
+import { StyleSheet, TextInput, View } from 'react-native-web';
 
 import AppText from './components/AppText';
 import PagePicker from './components/PagePicker'
 import PlayerList from './components/PlayerList';
+import SearchBar from './components/SearchBar';
 import { getTeamByName, getTeamPlayers } from './modules/API';
 import { getTeamId } from './utils';
 
@@ -65,19 +66,8 @@ const App = () => {
       <View style={styles.headerContainer}>
         <AppText fontSize="headerSm">Football Numbers</AppText>
       </View>
-
-      {/* App's search bar */}
-      <View>
-        <TextInput
-          onChangeText={handleOnChangeText}
-          onKeyPress={handleOnKeyPress}
-          style={styles.textInput}
-        />
-      </View>
-
-      {/* {/* Search results */}
+      <SearchBar onChange={handleOnChangeText} onKeyPress={handleOnKeyPress} />
       <PlayerList teamPlayers={teamPlayers} />
-
       <PagePicker activePage={paging?.current} totalPages={paging?.total} onPress={handlePagePickerOnPress} />
     </View>
   );

@@ -1,4 +1,4 @@
-import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native-web';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native-web';
 
 import AppText from '../AppText';
 
@@ -11,7 +11,7 @@ const PlayerList = ({ teamPlayers }) => {
       )
     };
     
-    return (teamPlayers.length ? (
+    return (teamPlayers && teamPlayers.length ? (
       <View>
         <FlatList
           data={teamPlayers}

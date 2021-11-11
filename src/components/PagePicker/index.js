@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     pageContainer: {
         borderWidth: 1,
         borderColor: 'black',
+        borderRadius: 5,
         marginHorizontal: 5,
         paddingVertical: 5,
         paddingHorizontal: 10,
