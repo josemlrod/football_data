@@ -3,6 +3,7 @@ import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native-w
 
 import AppText from './components/AppText';
 import PagePicker from './components/PagePicker'
+import PlayerList from './components/PlayerList';
 import { getTeamByName, getTeamPlayers } from './modules/API';
 import { getTeamId } from './utils';
 
@@ -57,12 +58,6 @@ const App = () => {
       current: pageNumber
     })
   }
-
-  const renderItem = ({ item: { player: { id, name } } }) => {
-    return (
-      <Item id={id} title={name} />
-    )
-  };
   
   return (
     <View>
@@ -80,28 +75,12 @@ const App = () => {
         />
       </View>
 
-      {/* Search results */}
-      {teamPlayers ? (
-        <View>
-          <FlatList
-            data={teamPlayers}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.player.id}
-          />
-        </View>
-      ) : null}
+      {/* {/* Search results */}
+      <PlayerList teamPlayers={teamPlayers} />
 
       <PagePicker activePage={paging?.current} totalPages={paging?.total} onPress={handlePagePickerOnPress} />
     </View>
   );
-}
-
-const Item = ({ id, title }) => {
-  return(
-    <Pressable key={id} style={styles.itemContainer}>
-      <AppText>{title}</AppText>
-    </Pressable>
-  )
 }
 
 const styles = StyleSheet.create({
