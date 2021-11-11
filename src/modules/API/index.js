@@ -42,9 +42,9 @@ export const getTeamByName = (teamName) => {
     });
 }
 
-export const getTeamPlayers = (teamId) => {
+export const getTeamPlayers = (teamId, pageNumber) => {
    // TODO: Update app to allow users to pick different seasons
-    return fetch(`https://api-football-v1.p.rapidapi.com/v3/players?team=${teamId}&season=2021`, {
+    return fetch(`https://api-football-v1.p.rapidapi.com/v3/players?team=${teamId}&season=2021&page=${pageNumber}`, {
 	    "method": "GET",
 	    "headers": {
 	    	"x-rapidapi-host": "api-football-v1.p.rapidapi.com",
@@ -52,7 +52,12 @@ export const getTeamPlayers = (teamId) => {
 	    }
     })
     .then(response => response.json())
-    .then(playersResponse => playersResponse.response)
+    .then(playersResponse => {
+        return { 
+            paging: playersResponse.paging,
+            teamPlayers: playersResponse.response,
+         };
+    })
     .catch(err => {
         console.error(err);
     }); 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { FlatList, Picker, Pressable, StyleSheet, TextInput, View } from 'react-native-web';
-import { TouchableHighlight } from 'react-native-web';
+import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native-web';
 
 import AppText from './components/AppText';
+import PagePicker from './components/PagePicker'
 import { getTeamByName, getTeamPlayers } from './modules/API';
 import { getTeamId } from './utils';
 
@@ -13,7 +13,10 @@ import { getTeamId } from './utils';
       selectedTeam?: Team
       teamPlayers?: Array<Player>
       selectedPlayer?: Player
-      pageNumber: number
+      pageNumber?: {
+        current: number,
+        total: number
+      }
     }
 */
 
@@ -21,11 +24,23 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [teamPlayers, setTeamPlayers] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [paging, setPaging] = useState(null);
 
-  // useEffect(() => {
+  useEffect(() => {
+    searchTeam(searchTerm);
+  }, [paging?.current])
 
-  // }, []);
+  const searchTeam = async (searchTerm) => {
+    if (!selectedTeam) {
+      const team = await getTeamByName(searchTerm);
+      setSelectedTeam(team);
+    }
+
+    const teamId = selectedTeam && getTeamId(selectedTeam.team);
+    const teamPlayers = await getTeamPlayers(teamId, paging?.current);
+    setPaging(teamPlayers.paging);
+    setTeamPlayers(teamPlayers.teamPlayers);
+  }
 
   const handleOnChangeText = (text) => setSearchTerm(text);
   const handleOnKeyPress = async (event) => {
@@ -33,13 +48,14 @@ const App = () => {
     
     if (!isEnterKey) return;
     else {
-      const team = await getTeamByName(searchTerm);
-      setSelectedTeam(team);
-
-      const teamId = getTeamId(team);
-      const teamPlayers = await getTeamPlayers(teamId);
-      setTeamPlayers(teamPlayers);
+      searchTeam(searchTerm);
     }
+  }
+  const handlePagePickerOnPress = (pageNumber) => () => {
+    setPaging({
+      ...paging,
+      current: pageNumber
+    })
   }
 
   const renderItem = ({ item: { player: { id, name } } }) => {
@@ -74,6 +90,8 @@ const App = () => {
           />
         </View>
       ) : null}
+
+      <PagePicker activePage={paging?.current} totalPages={paging?.total} onPress={handlePagePickerOnPress} />
     </View>
   );
 }
